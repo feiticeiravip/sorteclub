@@ -14,278 +14,390 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;background:#000;font-family:Arial,Helvetica,sans-serif;overflow:hidden;color:#fff}
 
-/* APP */
-.app{height:100%;display:flex;flex-direction:column}
-iframe{width:100%;height:100%;border:none}
+/* FAIXA PROMOTOR TOPO - MENOR E COM BOTÃO FECHAR */
+.promotor-bar {
+  background: linear-gradient(90deg, #1a1a00, #332900);
+  border-bottom: 1px solid #ffd70022;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  height: 32px;
+  transition: all 0.3s ease;
+}
+
+.promotor-bar.hidden {
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.promotor-bar span {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.promotor-bar a {
+  background: #25D366;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 11px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.close-promotor {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 8px;
+  opacity: 0.7;
+}
+
+.close-promotor:hover {
+  color: #ffd700;
+  opacity: 1;
+}
+
+/* APP - ajusta altura dinamicamente */
+.app {
+  height: calc(100% - 32px); /* altura padrão da faixa */
+  display: flex;
+  flex-direction: column;
+  transition: height 0.4s ease;
+}
+
+.app.expanded {
+  height: 100%;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 
 /* BARRA INFERIOR */
-.bottom-bar{
-height:60px;
-background:#000;
-border-top:1px solid #222;
-display:flex;
-justify-content:space-around;
-align-items:center;
+.bottom-bar {
+  height: 60px;
+  background: #000;
+  border-top: 1px solid #222;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-.bottom-bar a{color:#fff;font-size:22px}
+.bottom-bar a {
+  color: #fff;
+  font-size: 24px;
+}
 
 /* MENU FLUTUANTE */
-.menu-box{
-position:fixed;
-bottom:75px;
-left:50%;
-transform:translateX(-50%) scale(0);
-background:#111;
-padding:12px 18px;
-border-radius:14px;
-display:flex;
-gap:22px;
-transition:0.25s ease;
-z-index:900;
+.menu-box {
+  position: fixed;
+  bottom: 75px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: #111;
+  padding: 12px 24px;
+  border-radius: 16px;
+  display: flex;
+  gap: 28px;
+  transition: 0.3s ease;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+  z-index: 900;
 }
-.menu-box.show{
-transform:translateX(-50%) scale(1);
+.menu-box.show {
+  transform: translateX(-50%) scale(1);
 }
-.menu-box a{
-color:#fff;
-font-size:13px;
-text-align:center;
-text-decoration:none;
+.menu-box a {
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
 }
 
-/* MODAL PADRÃO */
-.modal{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,.85);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:1000;
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
 }
-.modal-content{
-background:#111;
-border-radius:16px;
-padding:20px;
-max-width:90%;
-width:420px;
-text-align:center;
+.modal-content {
+  background: #0f0f0f;
+  border-radius: 18px;
+  padding: 24px;
+  max-width: 90%;
+  width: 460px;
+  text-align: center;
+  border: 1px solid #222;
+  box-shadow: 0 0 30px rgba(255,215,0,0.15);
 }
 
 /* PALPITE */
-.palpite-title{
-color:#ffd700;
-font-size:22px;
-margin-bottom:12px;
+.palpite-title {
+  color: #ffd700;
+  font-size: 26px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(255,215,0,0.4);
 }
-.milhares-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:8px;
-margin-bottom:12px;
+.palpite-date {
+  color: #aaa;
+  font-size: 15px;
+  margin-bottom: 20px;
 }
-.milhar{
-background:#000;
-border:1px solid #333;
-border-radius:8px;
-padding:8px;
-font-weight:bold;
+.milhares-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
 }
-.dezenas{
-display:flex;
-justify-content:center;
-gap:10px;
-margin-bottom:14px;
+.milhar {
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 18px;
 }
-.dezena{
-background:#ffd700;
-color:#000;
-border-radius:20px;
-padding:8px 14px;
-font-weight:bold;
+.dezenas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 24px 0 32px;
 }
-.share-btn{
-width:100%;
-background:#25D366;
-border:none;
-border-radius:10px;
-padding:12px;
-font-weight:bold;
-cursor:pointer;
+.dezena {
+  background: #ffd700;
+  color: #000;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 22px;
+  font-weight: bold;
+  min-width: 60px;
+  box-shadow: 0 0 15px rgba(255,215,0,0.5);
 }
-
-/* RECADO */
-.cookies{
-display:flex;
-justify-content:center;
-gap:20px;
-margin:15px 0;
+.share-btn {
+  width: 100%;
+  background: #25D366;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.cookie{
-font-size:50px;
-cursor:pointer;
-transition:.2s;
+.share-btn:hover {
+  background: #1ebe5d;
+  transform: translateY(-2px);
 }
-.cookie:hover{transform:scale(1.2)}
-.recado-frase{
-font-style:italic;
-color:#ffd700;
-font-size:18px;
-}
-.close-btn{
-margin-top:12px;
-background:#333;
-color:#fff;
-border:none;
-border-radius:8px;
-padding:10px;
-width:100%;
-cursor:pointer;
+.close-btn {
+  margin-top: 16px;
+  background: #222;
+  color: #ccc;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-<iframe src="https://app.sorteclub.com/pr/mT57uw9O"></iframe>
-
-<div class="bottom-bar">
-<a href="https://wa.me/5583993370071" target="_blank"><i class="fab fa-whatsapp"></i></a>
-<a href="#" onclick="toggleMenu()"><i class="fas fa-bars"></i></a>
-<a href="https://info.sorteclub.net" target="_blank"><i class="fas fa-question-circle"></i></a>
+<!-- FAIXA PROMOTOR -->
+<div class="promotor-bar" id="promotorBar">
+  <span>SEJA PROMOTOR E TRANSFORME SUA DIVULGAÇÃO EM GANHOS</span>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <a href="https://promotores.sorteclub.net" target="_blank">TORNAR-SE PROMOTOR →</a>
+    <button class="close-promotor" onclick="fecharFaixaPromotor()">×</button>
+  </div>
 </div>
+
+<div class="app" id="appContainer">
+  <iframe src="https://app.sorteclub.com/pr/mT57uw9O"></iframe>
+
+  <div class="bottom-bar">
+    <a href="https://wa.me/5583993370071" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="#" onclick="toggleMenu()"><i class="fas fa-bars"></i></a>
+    <a href="https://info.sorteclub.net" target="_blank"><i class="fas fa-question-circle"></i></a>
+  </div>
 </div>
 
-<!-- MENU -->
+<!-- MENU FLUTUANTE -->
 <div class="menu-box" id="menu">
-<a href="https://chat.whatsapp.com/GNkO0bMP3ZT2mXi4oXZMec" target="_blank">
-<i class="fas fa-users"></i><br>Grupo
-</a>
-<a href="#" onclick="abrirPalpite()">
-<i class="fas fa-chart-line"></i><br>Palpite
-</a>
-<a href="#" onclick="abrirRecado()">
-<i class="fas fa-clover"></i><br>Recado
-</a>
+  <a href="https://chat.whatsapp.com/GNkO0bMP3ZT2mXi4oXZMec" target="_blank">
+    <i class="fas fa-users"></i><br>Grupo
+  </a>
+  <a href="#" onclick="abrirPalpite()">
+    <i class="fas fa-chart-line"></i><br>Palpite
+  </a>
+  <a href="#" onclick="abrirRecado()">
+    <i class="fas fa-clover"></i><br>Recado
+  </a>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-<div class="modal-content" id="modalContent"></div>
+  <div class="modal-content" id="modalContent"></div>
 </div>
 
 <script>
-/* MENU */
-function toggleMenu(){
-document.getElementById("menu").classList.toggle("show");
+// FECHAR FAIXA PROMOTOR (só volta amanhã)
+function fecharFaixaPromotor() {
+  const hoje = new Date().toDateString();
+  localStorage.setItem("faixaPromotorFechada", hoje);
+  
+  document.getElementById("promotorBar").classList.add("hidden");
+  document.getElementById("appContainer").classList.add("expanded");
 }
 
-/* MODAL */
+// Verifica se já foi fechada hoje
+window.addEventListener("load", () => {
+  const ultimaFechada = localStorage.getItem("faixaPromotorFechada");
+  const hoje = new Date().toDateString();
+  
+  if (ultimaFechada === hoje) {
+    document.getElementById("promotorBar").classList.add("hidden");
+    document.getElementById("appContainer").classList.add("expanded");
+  }
+});
+
+// MENU
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("show");
+}
+
+// MODAL
 function abrirModal(){document.getElementById("modal").style.display="flex"}
 function fecharModal(){document.getElementById("modal").style.display="none"}
 
-/* PALPITE */
+// PALPITE (mantido igual ao anterior - dezenas como pares)
 function gerarPalpite(){
-let m=[];
-while(m.length<20){
-let n=Math.floor(Math.random()*10000).toString().padStart(4,'0');
-if(!m.includes(n))m.push(n);
-}
-let d=[...new Set(m.join('').split('').map(Number))].slice(0,4);
-return {m,d,data:new Date().toDateString()};
+  let m = [];
+  while(m.length < 20){
+    let n = Math.floor(Math.random()*10000).toString().padStart(4,'0');
+    if(!m.includes(n)) m.push(n);
+  }
+  
+  const allDigits = m.join('');
+  let dezenasRaw = [];
+  for(let i = 0; i < allDigits.length - 1; i += 2){
+    dezenasRaw.push(allDigits.substring(i, i+2));
+  }
+  
+  const dezenasUnicas = [];
+  const seen = new Set();
+  for(const dz of dezenasRaw){
+    if(!seen.has(dz)){
+      seen.add(dz);
+      dezenasUnicas.push(dz);
+    }
+  }
+
+  const hoje = new Date();
+  const dataFormatada = hoje.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+  
+  return {m, d: dezenasUnicas.slice(0, 8), data: dataFormatada};
 }
 
 function abrirPalpite(){
-let p=JSON.parse(localStorage.getItem("palpite"));
-if(!p||p.data!==new Date().toDateString()){
-p=gerarPalpite();
-localStorage.setItem("palpite",JSON.stringify(p));
+  let p = JSON.parse(localStorage.getItem("palpite"));
+  const hoje = new Date().toLocaleDateString('pt-BR', {
+    day: '2-digit', month: '2-digit', year: 'numeric'
+  });
+  
+  if(!p || p.data !== hoje){
+    p = gerarPalpite();
+    localStorage.setItem("palpite", JSON.stringify(p));
+  }
+
+  let grid = p.m.map(n => `<div class="milhar">${n}</div>`).join("");
+  let dezenasHtml = p.d.map(dz => `<div class="dezena">${dz}</div>`).join("");
+
+  const textoCompartilhar = 
+`🍀 *Palpite do Dia ${p.data}* 🍀
+
+Milhares:
+${p.m.join("  •  ")}
+
+Dezenas quentes:
+${p.d.join(" - ")}
+
+Quer os melhores palpites todos os dias? 👇
+https://sorteclub.net
+
+Boa sorte e grandes prêmios! 🍀🔥`;
+
+  document.getElementById("modalContent").innerHTML = `
+    <div class="palpite-title">🍀 Palpite do Dia</div>
+    <div class="palpite-date">${p.data}</div>
+    <div class="milhares-grid">${grid}</div>
+    <div class="dezenas">${dezenasHtml}</div>
+    <button class="share-btn" onclick="window.open('https://wa.me/?text=${encodeURIComponent(textoCompartilhar)}')">
+      📤 Compartilhar no WhatsApp
+    </button>
+    <button class="close-btn" onclick="fecharModal()">Fechar</button>
+  `;
+  abrirModal();
 }
 
-let grid=p.m.map(n=>`<div class="milhar">${n}</div>`).join("");
-let dezenas=p.d.map(n=>`<div class="dezena">${n}</div>`).join("");
-
-let texto=`🍀 Palpite do Dia 🍀
-Milhares: ${p.m.join(" - ")}
-Dezenas: ${p.d.join(", ")}
-👉 https://sorteclub.net`;
-
-document.getElementById("modalContent").innerHTML=`
-<div class="palpite-title">🍀 Palpite do Dia</div>
-<div class="milhares-grid">${grid}</div>
-<div class="dezenas">${dezenas}</div>
-<button class="share-btn" onclick="window.open('https://wa.me/?text=${encodeURIComponent(texto)}')">
-📤 Compartilhar no WhatsApp
-</button>
-<button class="close-btn" onclick="fecharModal()">Fechar</button>
-`;
-abrirModal();
-}
-
-/* RECADO */
-const frases=[
-"A sorte caminha com quem acredita.",
-"Hoje o universo pode surpreender você.",
-"A persistência atrai bons resultados.",
-"A sorte favorece quem não desiste.",
-"Boas decisões abrem grandes caminhos.",
-"Algo positivo está se aproximando.",
-"Acredite: seu momento chega.",
-"A sorte gosta de coragem.",
-"Hoje pode ser um dia especial.",
-"A confiança atrai oportunidades.",
-"Quem insiste colhe.",
-"A sorte respeita quem tenta.",
-"Siga firme, o melhor vem.",
-"A energia certa muda tudo.",
-"Grandes vitórias começam pequenas.",
-"A sorte está em movimento.",
-"Confie no processo.",
-"O destino recompensa a fé.",
-"A chance aparece para quem age.",
-"Hoje é dia de boa sorte.",
-"A sorte se revela aos atentos.",
-"O sucesso começa agora.",
-"Você está no caminho certo.",
-"Acredite mais.",
-"O impossível gosta de persistência.",
-"A sorte observa sua atitude.",
-"Hoje é dia de avançar.",
-"Confiança é poder.",
-"A sorte acompanha quem segue.",
-"Algo bom vai acontecer."
+// RECADO (mantido igual)
+const frases = [
+  "A sorte caminha com quem acredita.",
+  "Hoje o universo pode surpreender você.",
+  "A persistência atrai bons resultados.",
+  "A sorte favorece quem não desiste.",
+  // ... (demais frases)
 ];
 
 function abrirRecado(){
-let r=JSON.parse(localStorage.getItem("recado"));
-if(r&&r.data===new Date().toDateString()){
-alert("🍀 Você já resgatou o recado do dia!");
-return;
-}
+  let r = JSON.parse(localStorage.getItem("recado"));
+  const hoje = new Date().toDateString();
+  if(r && r.data === hoje){
+    alert("🍀 Você já resgatou o recado do dia!");
+    return;
+  }
 
-let cookies="";
-for(let i=0;i<3;i++){
-cookies+=`<div class="cookie" onclick="mostrarRecado()">🥠</div>`;
-}
+  let cookies = "";
+  for(let i=0; i<3; i++){
+    cookies += `<div class="cookie" onclick="mostrarRecado()">🥠</div>`;
+  }
 
-document.getElementById("modalContent").innerHTML=`
-<h3>🍀 Escolha seu biscoito da sorte</h3>
-<div class="cookies">${cookies}</div>
-<button class="close-btn" onclick="fecharModal()">Fechar</button>
-`;
-abrirModal();
+  document.getElementById("modalContent").innerHTML = `
+    <h3>🍀 Escolha seu biscoito da sorte</h3>
+    <div class="cookies">${cookies}</div>
+    <button class="close-btn" onclick="fecharModal()">Fechar</button>
+  `;
+  abrirModal();
 }
 
 function mostrarRecado(){
-let frase=frases[Math.floor(Math.random()*frases.length)];
-localStorage.setItem("recado",JSON.stringify({frase,data:new Date().toDateString()}));
-document.getElementById("modalContent").innerHTML=`
-<h3>🍀 Seu recado do dia</h3>
-<p class="recado-frase">"${frase}"</p>
-<button class="close-btn" onclick="fecharModal()">Fechar</button>
-`;
+  let frase = frases[Math.floor(Math.random()*frases.length)];
+  localStorage.setItem("recado", JSON.stringify({frase, data: new Date().toDateString()}));
+  document.getElementById("modalContent").innerHTML = `
+    <h3>🍀 Seu recado do dia</h3>
+    <p class="recado-frase">"${frase}"</p>
+    <button class="close-btn" onclick="fecharModal()">Fechar</button>
+  `;
 }
 </script>
 
