@@ -1,239 +1,233 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Clientes WhatsApp</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0b0b0b;
-            color: #fff;
-        }
-
-        /* ===== OVERLAY LOGIN ===== */
-        #loginOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.92);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        #loginOverlay.hide {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(1.05);
-        }
-
-        .login-box {
-            background: #111;
-            padding: 30px;
-            border-radius: 14px;
-            width: 90%;
-            max-width: 320px;
-            text-align: center;
-        }
-
-        .login-box input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 12px;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
-        }
-
-        .login-box button {
-            margin-top: 15px;
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            background: #00ff88;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* ===== APP ===== */
-        header {
-            background: #111;
-            padding: 15px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 20px;
-        }
-
-        header span {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .controls {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .controls input {
-            width: 90%;
-            max-width: 400px;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 15px;
-            margin-bottom: 10px;
-        }
-
-        .status-filters {
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .status-filters button {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            background: #333;
-            color: white;
-            transition: all 0.2s;
-        }
-
-        .status-filters button.active {
-            background: #00ff88;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .toggle {
-            font-size: 14px;
-            margin: 10px 0;
-        }
-
-        .container {
-            padding: 15px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 15px;
-        }
-
-        .card {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            border-radius: 10px;
-            padding: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .card:hover {
-            background: #00ff88;
-            color: #000;
-        }
-
-        .card.enviado {
-            border-left: 4px solid #00ff88;
-            background: #0f2218;
-        }
-
-        .nome {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .numero {
-            font-size: 15px;
-            margin-top: 8px;
-        }
-
-        .instrucao {
-            margin-top: 12px;
-            font-size: 12px;
-            opacity: 0.7;
-            line-height: 1.3;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px;
-        }
-
-        .pagination button {
-            padding: 8px 14px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.4;
-        }
-    </style>
-</head>
-<body>
-    <!-- OVERLAY LOGIN -->
-    <div id="loginOverlay">
-        <div class="login-box">
-            <h2>🔒 Acesso restrito</h2>
-            <input type="password" id="senha" placeholder="Digite a senha">
-            <button onclick="verificarSenha()">Entrar</button>
-        </div>
-    </div>
-
-    <header>
-        <h1>JOICE - INDIQUE IMPERADOR</h1>
-        <span id="total">Exibindo 0 de 0</span>
-    </header>
-
-    <div class="controls">
-        <input type="text" id="busca" placeholder="Pesquisar cliente...">
-
-        <div class="status-filters">
-            <button data-status="todos" class="active">TODOS</button>
-            <button data-status="pendentes">PENDENTES</button>
-            <button data-status="enviados">ENVIADOS</button>
-        </div>
-
-        <div class="toggle">
-            <label>
-                <input type="checkbox" id="autoMsg" checked> Enviar mensagem automática
-            </label>
-        </div>
-    </div>
-
-    <div class="container" id="lista"></div>
-
-    <div class="pagination">
-        <button id="prev">⬅ Anterior</button>
-        <button id="next">Próximo ➡</button>
-    </div>
-
-    <script>
-        // ===== SENHA =====
-        function verificarSenha() {
-            if (document.getElementById("senha").value === "0419") {
-                document.getElementById("loginOverlay").classList.add("hide");
-                carregarCSV();
-            } else {
-                alert("Senha incorreta!");
+    <head>
+        <meta charset="UTF-8">
+        <title>Clientes WhatsApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background: #0b0b0b;
+                color: #fff;
             }
-        }
 
-        // ===== CSV (COLE O SEU COMPLETO AQUI) =====
-        const CSV_DATA = `
+            /* ===== OVERLAY LOGIN ===== */
+            #loginOverlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.92);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+
+            #loginOverlay.hide {
+                opacity: 0;
+                pointer-events: none;
+                transform: scale(1.05);
+            }
+
+            .login-box {
+                background: #111;
+                padding: 30px;
+                border-radius: 14px;
+                width: 90%;
+                max-width: 320px;
+                text-align: center;
+            }
+
+            .login-box input {
+                width: 100%;
+                padding: 12px;
+                margin-top: 12px;
+                border-radius: 8px;
+                border: none;
+                font-size: 16px;
+            }
+
+            .login-box button {
+                margin-top: 15px;
+                padding: 12px;
+                width: 100%;
+                border: none;
+                border-radius: 8px;
+                background: #00ff88;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            /* ===== APP ===== */
+            header {
+                background: #111;
+                padding: 15px;
+                text-align: center;
+            }
+
+            header h1 {
+                margin: 0;
+                font-size: 20px;
+            }
+
+            header span {
+                font-size: 14px;
+                opacity: 0.8;
+            }
+
+            .controls {
+                padding: 10px;
+                text-align: center;
+            }
+
+            .controls input {
+                width: 90%;
+                max-width: 400px;
+                padding: 10px;
+                border-radius: 8px;
+                border: none;
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .status-filters {
+                margin: 10px 0;
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            .status-filters button {
+                padding: 8px 16px;
+                border-radius: 20px;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                background: #333;
+                color: white;
+                transition: all 0.2s;
+            }
+
+            .status-filters button.active {
+                background: #00ff88;
+                color: #000;
+                font-weight: bold;
+            }
+
+            .toggle {
+                font-size: 14px;
+                margin: 10px 0;
+            }
+
+            .container {
+                padding: 15px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 15px;
+            }
+
+            .card {
+                background: #1a1a1a;
+                border: 1px solid #2a2a2a;
+                border-radius: 10px;
+                padding: 15px;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .card:hover {
+                background: #00ff88;
+                color: #000;
+            }
+
+            .card.enviado {
+                border-left: 4px solid #00ff88;
+                background: #0f2218;
+            }
+
+            .nome {
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+            .numero {
+                font-size: 15px;
+                margin-top: 8px;
+            }
+
+            .instrucao {
+                margin-top: 12px;
+                font-size: 12px;
+                opacity: 0.7;
+                line-height: 1.3;
+            }
+
+            .pagination {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .pagination button {
+                padding: 8px 14px;
+                border-radius: 6px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .pagination button:disabled {
+                opacity: 0.4;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- OVERLAY LOGIN -->
+        <div id="loginOverlay">
+            <div class="login-box">
+                <h2>🔒 Acesso restrito</h2>
+                <input type="password" id="senha" placeholder="Digite a senha">
+                <button onclick="verificarSenha()">Entrar</button>
+            </div>
+        </div>
+        <header>
+            <h1>JOICE - INDIQUE IMPERADOR</h1>
+            <span id="total">Exibindo 0 de 0</span>
+        </header>
+        <div class="controls">
+            <input type="text" id="busca" placeholder="Pesquisar cliente...">
+            <div class="status-filters">
+                <button data-status="todos" class="active">TODOS</button>
+                <button data-status="pendentes">PENDENTES</button>
+                <button data-status="enviados">ENVIADOS</button>
+            </div>
+            <div class="toggle">
+                <label>
+                    <input type="checkbox" id="autoMsg" checked>Enviar mensagem automática
+            
+                </label>
+            </div>
+        </div>
+        <div class="container" id="lista"></div>
+        <div class="pagination">
+            <button id="prev">⬅ Anterior</button>
+            <button id="next">Próximo ➡</button>
+        </div>
+        <script>
+            // ===== SENHA =====
+            function verificarSenha() {
+                if (document.getElementById("senha").value === "0419") {
+                    document.getElementById("loginOverlay").classList.add("hide");
+                    carregarCSV();
+                } else {
+                    alert("Senha incorreta!");
+                }
+            }
+
+            // ===== CSV (COLE O SEU COMPLETO AQUI) =====
+            const CSV_DATA = `
 CADASTRO	ULTIMOACESSO	ID	APELIDO	NOME	WHATSAPP	PROMOTOR
 02/08/25 13:17	01/10/25 20:59	1163288	ALCINO	ALCINO DOS REIS DE CARVALHO	91982866529	YASMIN
 01/10/25 20:58	01/10/25 20:59	1316274	CARLOS AUGUSTO DANTAS GOMES		21986633779	CASSIANO PEREIRA
@@ -1517,76 +1511,76 @@ CADASTRO	ULTIMOACESSO	ID	APELIDO	NOME	WHATSAPP	PROMOTOR
 
 `;
 
-        // ===== MENSAGEM AUTOMÁTICA =====
-        const MENSAGEM = `Olá! 😊
-Quero te indicar uma banca muito boa: Sorte Club 🍀
+            // ===== MENSAGEM AUTOMÁTICA =====
+            const MENSAGEM = `Olá! 😊
+Cadastre-se na nossa banca Sorte Club 🍀
 
 👉 https://app.sorteclub.com/pr/uLjK7Sh8
+`;
 
-Após realizar o cadastro, envie um print da tela inicial do app!`;
+            const LIMITE = 10;
+            let pagina = 1;
+            let dados = [];
+            let filtrados = [];
 
-        const LIMITE = 10;
-        let pagina = 1;
-        let dados = [];
-        let filtrados = [];
+            // ===== LOCALSTORAGE - Status enviados =====
+            let enviados = JSON.parse(localStorage.getItem("clientes_enviados")) || {};
 
-        // ===== LOCALSTORAGE - Status enviados =====
-        let enviados = JSON.parse(localStorage.getItem("clientes_enviados")) || {};
-
-        function salvarEnviados() {
-            localStorage.setItem("clientes_enviados", JSON.stringify(enviados));
-        }
-
-        function marcarComoEnviado(whatsapp) {
-            enviados[whatsapp] = true;
-            salvarEnviados();
-        }
-
-        function isEnviado(whatsapp) {
-            return !!enviados[whatsapp];
-        }
-
-        function carregarCSV() {
-            const linhas = CSV_DATA.trim().split(/\r?\n/);
-            for (let i = 1; i < linhas.length; i++) {
-                const c = linhas[i].split("\t");
-                if (c.length < 6) continue;
-                const whatsapp = c[5].trim();
-                dados.push({
-                    apelido: c[3].trim(),
-                    whatsapp: whatsapp,
-                    enviado: isEnviado(whatsapp)
-                });
+            function salvarEnviados() {
+                localStorage.setItem("clientes_enviados", JSON.stringify(enviados));
             }
-            filtrados = [...dados];
-            aplicarFiltroStatus("todos");
-            renderizar();
-        }
 
-        function aplicarFiltroStatus(status) {
-            if (status === "todos") {
+            function marcarComoEnviado(whatsapp) {
+                enviados[whatsapp] = true;
+                salvarEnviados();
+            }
+
+            function isEnviado(whatsapp) {
+                return !!enviados[whatsapp];
+            }
+
+            function carregarCSV() {
+                const linhas = CSV_DATA.trim().split(/\r?\n/);
+                for (let i = 1; i < linhas.length; i++) {
+                    const c = linhas[i].split("\t");
+                    if (c.length < 6)
+                        continue;
+                    const whatsapp = c[5].trim();
+                    dados.push({
+                        apelido: c[3].trim(),
+                        whatsapp: whatsapp,
+                        enviado: isEnviado(whatsapp)
+                    });
+                }
                 filtrados = [...dados];
-            } else if (status === "pendentes") {
-                filtrados = dados.filter(d => !d.enviado);
-            } else if (status === "enviados") {
-                filtrados = dados.filter(d => d.enviado);
+                aplicarFiltroStatus("todos");
+                renderizar();
             }
-            pagina = 1;
-            renderizar();
-        }
 
-        function renderizar() {
-            const lista = document.getElementById("lista");
-            lista.innerHTML = "";
+            function aplicarFiltroStatus(status) {
+                if (status === "todos") {
+                    filtrados = [...dados];
+                } else if (status === "pendentes") {
+                    filtrados = dados.filter(d => !d.enviado);
+                } else if (status === "enviados") {
+                    filtrados = dados.filter(d => d.enviado);
+                }
+                pagina = 1;
+                renderizar();
+            }
 
-            const inicio = (pagina - 1) * LIMITE;
-            const fim = inicio + LIMITE;
-            const paginaDados = filtrados.slice(inicio, fim);
+            function renderizar() {
+                const lista = document.getElementById("lista");
+                lista.innerHTML = "";
 
-            paginaDados.forEach(item => {
-                const card = document.createElement("div");
-                card.className = `card ${item.enviado ? 'enviado' : ''}`;
-                card.innerHTML = `
+                const inicio = (pagina - 1) * LIMITE;
+                const fim = inicio + LIMITE;
+                const paginaDados = filtrados.slice(inicio, fim);
+
+                paginaDados.forEach(item => {
+                    const card = document.createElement("div");
+                    card.className = `card ${item.enviado ? 'enviado' : ''}`;
+                    card.innerHTML = `
                     <div class="nome">${item.apelido}</div>
                     <div class="numero">📞 ${item.whatsapp}</div>
                     <div class="instrucao">
@@ -1594,64 +1588,68 @@ Após realizar o cadastro, envie um print da tela inicial do app!`;
                     </div>
                 `;
 
-                card.onclick = () => {
-                    let url = "https://wa.me/55" + item.whatsapp;
-                    if (document.getElementById("autoMsg").checked) {
-                        url += "?text=" + encodeURIComponent(MENSAGEM);
+                    card.onclick = () => {
+                        let url = "https://wa.me/55" + item.whatsapp;
+                        if (document.getElementById("autoMsg").checked) {
+                            url += "?text=" + encodeURIComponent(MENSAGEM);
+                        }
+                        window.open(url, "_blank");
+
+                        // Marca como enviado após clicar
+                        if (!item.enviado) {
+                            item.enviado = true;
+                            marcarComoEnviado(item.whatsapp);
+                            card.classList.add("enviado");
+                        }
                     }
-                    window.open(url, "_blank");
+                    ;
 
-                    // Marca como enviado após clicar
-                    if (!item.enviado) {
-                        item.enviado = true;
-                        marcarComoEnviado(item.whatsapp);
-                        card.classList.add("enviado");
-                    }
-                };
+                    lista.appendChild(card);
+                }
+                );
 
-                lista.appendChild(card);
-            });
+                const exibidos = Math.min(pagina * LIMITE, filtrados.length);
+                document.getElementById("total").textContent = `Exibindo ${exibidos} de ${filtrados.length} clientes`;
 
-            const exibidos = Math.min(pagina * LIMITE, filtrados.length);
-            document.getElementById("total").textContent = 
-                `Exibindo ${exibidos} de ${filtrados.length} clientes`;
+                document.getElementById("prev").disabled = pagina === 1;
+                document.getElementById("next").disabled = fim >= filtrados.length;
+            }
 
-            document.getElementById("prev").disabled = pagina === 1;
-            document.getElementById("next").disabled = fim >= filtrados.length;
-        }
+            // ===== EVENTOS =====
+            document.getElementById("prev").onclick = () => {
+                if (pagina > 1) {
+                    pagina--;
+                    renderizar();
+                }
+            }
+            ;
 
-        // ===== EVENTOS =====
-        document.getElementById("prev").onclick = () => {
-            if (pagina > 1) {
-                pagina--;
+            document.getElementById("next").onclick = () => {
+                if (pagina * LIMITE < filtrados.length) {
+                    pagina++;
+                    renderizar();
+                }
+            }
+            ;
+
+            document.getElementById("busca").oninput = e => {
+                const t = e.target.value.toLowerCase();
+                filtrados = dados.filter(d => d.apelido.toLowerCase().includes(t));
+                pagina = 1;
                 renderizar();
             }
-        };
+            ;
 
-        document.getElementById("next").onclick = () => {
-            if (pagina * LIMITE < filtrados.length) {
-                pagina++;
-                renderizar();
+            // Filtros de status
+            document.querySelectorAll('.status-filters button').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.status-filters button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    aplicarFiltroStatus(btn.dataset.status);
+                }
+                ;
             }
-        };
-
-        document.getElementById("busca").oninput = e => {
-            const t = e.target.value.toLowerCase();
-            filtrados = dados.filter(d => 
-                d.apelido.toLowerCase().includes(t)
             );
-            pagina = 1;
-            renderizar();
-        };
-
-        // Filtros de status
-        document.querySelectorAll('.status-filters button').forEach(btn => {
-            btn.onclick = () => {
-                document.querySelectorAll('.status-filters button').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                aplicarFiltroStatus(btn.dataset.status);
-            };
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
