@@ -2626,21 +2626,27 @@ Quero te indicar uma banca muito boa: Sorte Club 🍀
             let dados = [];
             let filtrados = [];
 
-            function carregarCSV() {
-                const linhas = CSV_DATA.trim().split(/\r?\n/);
-                for (let i = 1; i < linhas.length; i++) {
-                    const c = linhas[i].split("\t");
-                    if (c.length < 7)
-                        continue;
-                    dados.push({
-                        apelido: c[3],
-                        whatsapp: c[5],
-                        promotor: c[6]
-                    });
-                }
-                filtrados = [...dados];
-                renderizar();
-            }
+function carregarCSV() {
+    dados = [];
+    const linhas = CSV_DATA.trim().split(/\r?\n/);
+
+    for (let i = 1; i < linhas.length; i++) {
+
+        const c = linhas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+
+        if (c.length < 7) continue;
+
+        dados.push({
+            apelido: c[3].replace(/"/g, "").trim(),
+            whatsapp: c[5].replace(/"/g, "").trim(),
+            promotor: c[6].replace(/"/g, "").trim()
+        });
+    }
+
+    filtrados = [...dados];
+    pagina = 1;
+    renderizar();
+}
 
             function renderizar() {
                 const lista = document.getElementById("lista");
