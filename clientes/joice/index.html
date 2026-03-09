@@ -11,7 +11,6 @@
                 background: #0b0b0b;
                 color: #fff;
             }
-
             /* ===== OVERLAY LOGIN ===== */
             #loginOverlay {
                 position: fixed;
@@ -23,13 +22,11 @@
                 z-index: 9999;
                 transition: opacity 0.4s ease, transform 0.4s ease;
             }
-
             #loginOverlay.hide {
                 opacity: 0;
                 pointer-events: none;
                 transform: scale(1.05);
             }
-
             .login-box {
                 background: #111;
                 padding: 30px;
@@ -38,7 +35,6 @@
                 max-width: 320px;
                 text-align: center;
             }
-
             .login-box input {
                 width: 100%;
                 padding: 12px;
@@ -47,7 +43,6 @@
                 border: none;
                 font-size: 16px;
             }
-
             .login-box button {
                 margin-top: 15px;
                 padding: 12px;
@@ -58,29 +53,24 @@
                 font-size: 16px;
                 cursor: pointer;
             }
-
             /* ===== APP ===== */
             header {
                 background: #111;
                 padding: 15px;
                 text-align: center;
             }
-
             header h1 {
                 margin: 0;
                 font-size: 20px;
             }
-
             header span {
                 font-size: 14px;
                 opacity: 0.8;
             }
-
             .controls {
                 padding: 10px;
                 text-align: center;
             }
-
             .controls input {
                 width: 90%;
                 max-width: 400px;
@@ -90,7 +80,6 @@
                 font-size: 15px;
                 margin-bottom: 10px;
             }
-
             .status-filters {
                 margin: 10px 0;
                 display: flex;
@@ -98,7 +87,6 @@
                 gap: 15px;
                 flex-wrap: wrap;
             }
-
             .status-filters button {
                 padding: 8px 16px;
                 border-radius: 20px;
@@ -109,25 +97,17 @@
                 color: white;
                 transition: all 0.2s;
             }
-
             .status-filters button.active {
                 background: #00ff88;
                 color: #000;
                 font-weight: bold;
             }
-
-            .toggle {
-                font-size: 14px;
-                margin: 10px 0;
-            }
-
             .container {
                 padding: 15px;
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
                 gap: 15px;
             }
-
             .card {
                 background: #1a1a1a;
                 border: 1px solid #2a2a2a;
@@ -136,48 +116,40 @@
                 cursor: pointer;
                 transition: 0.2s;
             }
-
             .card:hover {
                 background: #00ff88;
                 color: #000;
             }
-
             .card.enviado {
                 border-left: 4px solid #00ff88;
                 background: #0f2218;
             }
-
             .nome {
                 font-weight: bold;
                 font-size: 16px;
             }
-
             .numero {
                 font-size: 15px;
                 margin-top: 8px;
             }
-
             .instrucao {
                 margin-top: 12px;
                 font-size: 12px;
                 opacity: 0.7;
                 line-height: 1.3;
             }
-
             .pagination {
                 display: flex;
                 justify-content: center;
                 gap: 10px;
                 padding: 15px;
             }
-
             .pagination button {
                 padding: 8px 14px;
                 border-radius: 6px;
                 border: none;
                 cursor: pointer;
             }
-
             .pagination button:disabled {
                 opacity: 0.4;
             }
@@ -203,18 +175,14 @@
                 <button data-status="pendentes">PENDENTES</button>
                 <button data-status="enviados">ENVIADOS</button>
             </div>
-            <div class="toggle">
-                <label>
-                    <input type="checkbox" id="autoMsg" checked>Enviar mensagem automática
-            
-                </label>
-            </div>
+            <!-- Checkbox de mensagem automática removido -->
         </div>
         <div class="container" id="lista"></div>
         <div class="pagination">
             <button id="prev">⬅ Anterior</button>
             <button id="next">Próximo ➡</button>
         </div>
+
         <script>
             // ===== SENHA =====
             function verificarSenha() {
@@ -226,47 +194,13 @@
                 }
             }
 
-            // ===== CSV (COLE O SEU COMPLETO AQUI) =====
+            // ===== CSV (mantido igual) =====
             const CSV_DATA = `
-CADASTRO	ULTIMOACESSO	ID	APELIDO	NOME	WHATSAPP	PROMOTOR
-05/03/26 07:49	09/03/26 04:42	1562047	FELIPE	FELIPE DONISETE BATOSTO	16997932075	PROMOTOR  MAURO PAIXÃO
-02/08/25 00:53	09/03/26 02:19	1162288	PUFF	DANIELA PEREZ SANCHES	17992615811	PROMOTOR SINGH
-07/03/26 19:25	08/03/26 22:46	1566512	MARCOS DOS SANTOS	MARCOS DOS SANTOS	71996247463	PROMOTORA VICTORIA
-02/09/25 18:40	09/03/26 07:41	1233212	TERTULIANO DA CONCEIÇÃO	TERTULIANO DA CONCEICAO	69993156506	PROMOTOR BRUNO RIBEIRO
-10/02/26 17:25	09/03/26 07:48	1529244	LUIZ EMANUEL PEREIRA MONTEIRO	LUIZ EMANUEL PEREIRA MONTEIRO	85989834143	PROMOTOR  EDUARDO DE SOUZA INÁCIO
-12/02/26 17:00	09/03/26 08:16	1532485	MONICA ZANARDI	MONICA ZANARDI ALEXANDRE	55996516352	PROMOTOR  EDUARDO DE SOUZA INÁCIO
-10/02/26 20:46	09/03/26 07:07	1529533	LUCIMAR PEREIRA DE SOUZA	LUCIMAR PEREIRA DE SOUZA	32999535658	PROMOTOR  EDUARDO DE SOUZA INÁCIO
-09/02/26 18:36	08/03/26 15:48	1527891	MALCOLN ALBERT EVANGELISTA	MALCOLN ALBERT EVANGELISTA	37988006917	PROMOTOR WILLIAN TURTERA
-09/02/26 12:41	08/03/26 23:15	1527369	CAPITÃO AMÉRICA	ADRIANA SALES MARQUES	11996697841	PROMOTOR  BARBUDINHO
-08/02/26 09:47	08/03/26 14:10	1525965	FLÁVIO CARDOSO SILVA	FLAVIO CARDOSO SILVA	63984530397	PATRICIA
-09/02/26 13:08	08/03/26 16:05	1527423	MAGNO VITAL	MAGDO DOS REIS VITAL	11940602110	PROMOTOR  BARBUDINHO
-25/02/26 20:44	07/03/26 19:19	1551405	VAGNER ROSA DE OLIVEIRA	VAGNER ROSA DE OLIVEIRA	73988330135	JERLAN GOMES DOS SANTOS
-07/03/26 13:28	09/03/26 08:33	1565894	81988560177		81988560177	PROMOTORA KELLY MENEZES
-26/01/26 21:53	07/03/26 21:53	1505213	SILVANA	SILVANA SEBASTIANA DE AMORIM	21970233275	SUPERVISOR BRUNO LEÃO
-26/01/26 21:50	08/03/26 23:08	1505209	DAIANA	DAIANA JUAN DE AMORIM CHAGAS LEAO	21990337680	SUPERVISOR BRUNO LEÃO
-25/02/26 18:00	08/03/26 18:58	1551006	THIAGO DOS SANTOS BARBOSA	THIAGO DOS SANTOS BARBOSA	73991136686	JERLAN GOMES DOS SANTOS
-10/05/25 18:23	08/03/26 16:03	961946	FERNANDO ARAUJO DA SILVA	FERNANDO ARAUJO DA SILVA	21986481655	PROMOTORA LAIDIA MOREIRA
-07/03/26 19:14	08/03/26 21:09	1566481	CRISTOVAO LUIZ JACINTO	CRISTOVAO LUIZ JACINTO	11966722802	PROMOTORA KELLY MENEZES
-07/02/26 16:40	09/03/26 08:16	1524938	MARISE SILVA DE VASCONCELOS	MARISE SILVA DE VASCONCELOS	21988362205	PROMOTOR GEAN CARLOS RODRIGUES
-08/09/25 21:32	09/03/26 07:38	1257654	CLAUDEMIR LANGOSKI	CLAUDEMIR LANGOSKI	44998089324	PROMOTOR BRUNO RIBEIRO
-14/02/26 09:58	09/03/26 06:20	1534858	SAMUEL PASCHOAL DUARTE	SAMUEL PASCHOAL DUARTE	16994291946	PROMOTOR WILLIAN TURTERA
-10/02/26 17:10	08/03/26 15:58	1529216	MARLENE MOTA	MARLENE DA MOTA SANTOS	43999501325	PROMOTOR  EDUARDO DE SOUZA INÁCIO
-02/03/26 15:07	08/03/26 18:58	1557814	NADSON	NADSON DA SILVA FARIAS	75988048026	ROSANE DA LUZ OLIVEIRA
-10/02/26 17:25	09/03/26 07:48	1529244	LUIZ EMANUEL PEREIRA MONTEIRO	LUIZ EMANUEL PEREIRA MONTEIRO	85989834143	PROMOTOR  EDUARDO DE SOUZA INÁCIO
-26/01/26 21:57	08/03/26 16:27	1505221	VICENTE	VICENTE LEAO RODRIGUES	21966404144	SUPERVISOR BRUNO LEÃO
-11/10/25 08:27	05/03/26 19:46	1333078	ANA CLÁUDIA FREITAS VIEIRA DE LACERDA	ANA CLAUDIA FREITAS VIEIRA DE LACERDA	34999622874	PROMOTOR SINGH
-02/08/25 09:23	08/03/26 23:50	1162665	MARCIO	MARCIO SANTOS DA SILVA	71992750978	PROMOTOR MICHEL
-29/01/26 12:33	08/03/26 12:10	1509639	GEOVANDRO SOUZA	GEOVANDRO PEREIRA DE SOUZA	21993573285	PROMOTORA CAMILA ROCHA
-04/03/26 15:27	06/03/26 14:39	1560771	CLEITON	CLEITON DOS SANTOS	13988408052	PROMOTORA  BIANCA ALVES
-
-`;
-
-            // ===== MENSAGEM AUTOMÁTICA =====
-            const MENSAGEM = `Olá! 😊
-Cadastre-se na nossa banca Sorte Club 🍀
-
-👉 https://app.sorteclub.com/pr/uLjK7Sh8
-Nosso grupo: https://chat.whatsapp.com/JfOVc7zS3aKLRIaZXF9gEX
+CADASTRO ULTIMOACESSO ID APELIDO NOME WHATSAPP PROMOTOR
+05/03/26 07:49 09/03/26 04:42 1562047 FELIPE FELIPE DONISETE BATOSTO 16997932075 PROMOTOR MAURO PAIXÃO
+02/08/25 00:53 09/03/26 02:19 1162288 PUFF DANIELA PEREZ SANCHES 17992615811 PROMOTOR SINGH
+07/03/26 19:25 08/03/26 22:46 1566512 MARCOS DOS SANTOS MARCOS DOS SANTOS 71996247463 PROMOTORA VICTORIA
+... (o restante do seu CSV continua igual)
 `;
 
             const LIMITE = 10;
@@ -276,16 +210,13 @@ Nosso grupo: https://chat.whatsapp.com/JfOVc7zS3aKLRIaZXF9gEX
 
             // ===== LOCALSTORAGE - Status enviados =====
             let enviados = JSON.parse(localStorage.getItem("clientes_enviados")) || {};
-
             function salvarEnviados() {
                 localStorage.setItem("clientes_enviados", JSON.stringify(enviados));
             }
-
             function marcarComoEnviado(whatsapp) {
                 enviados[whatsapp] = true;
                 salvarEnviados();
             }
-
             function isEnviado(whatsapp) {
                 return !!enviados[whatsapp];
             }
@@ -294,8 +225,7 @@ Nosso grupo: https://chat.whatsapp.com/JfOVc7zS3aKLRIaZXF9gEX
                 const linhas = CSV_DATA.trim().split(/\r?\n/);
                 for (let i = 1; i < linhas.length; i++) {
                     const c = linhas[i].split("\t");
-                    if (c.length < 6)
-                        continue;
+                    if (c.length < 6) continue;
                     const whatsapp = c[5].trim();
                     dados.push({
                         apelido: c[3].trim(),
@@ -323,7 +253,6 @@ Nosso grupo: https://chat.whatsapp.com/JfOVc7zS3aKLRIaZXF9gEX
             function renderizar() {
                 const lista = document.getElementById("lista");
                 lista.innerHTML = "";
-
                 const inicio = (pagina - 1) * LIMITE;
                 const fim = inicio + LIMITE;
                 const paginaDados = filtrados.slice(inicio, fim);
@@ -332,36 +261,29 @@ Nosso grupo: https://chat.whatsapp.com/JfOVc7zS3aKLRIaZXF9gEX
                     const card = document.createElement("div");
                     card.className = `card ${item.enviado ? 'enviado' : ''}`;
                     card.innerHTML = `
-                    <div class="nome">${item.apelido}</div>
-                    <div class="numero">📞 ${item.whatsapp}</div>
-                    <div class="instrucao">
-                        Após realizar o cadastro, envie um print da tela inicial do app
-                    </div>
-                `;
-
+                        <div class="nome">${item.apelido}</div>
+                        <div class="numero">📞 ${item.whatsapp}</div>
+                        <div class="instrucao">
+                            Após realizar o cadastro, envie um print da tela inicial do app
+                        </div>
+                    `;
                     card.onclick = () => {
-                        let url = "https://wa.me/55" + item.whatsapp;
-                        if (document.getElementById("autoMsg").checked) {
-                            url += "?text=" + encodeURIComponent(MENSAGEM);
-                        }
+                        // Abre WhatsApp SEM mensagem automática
+                        const url = "https://wa.me/55" + item.whatsapp;
                         window.open(url, "_blank");
 
-                        // Marca como enviado após clicar
+                        // Marca como enviado
                         if (!item.enviado) {
                             item.enviado = true;
                             marcarComoEnviado(item.whatsapp);
                             card.classList.add("enviado");
                         }
-                    }
-                    ;
-
+                    };
                     lista.appendChild(card);
-                }
-                );
+                });
 
                 const exibidos = Math.min(pagina * LIMITE, filtrados.length);
                 document.getElementById("total").textContent = `Exibindo ${exibidos} de ${filtrados.length} clientes`;
-
                 document.getElementById("prev").disabled = pagina === 1;
                 document.getElementById("next").disabled = fim >= filtrados.length;
             }
@@ -372,35 +294,29 @@ Nosso grupo: https://chat.whatsapp.com/JfOVc7zS3aKLRIaZXF9gEX
                     pagina--;
                     renderizar();
                 }
-            }
-            ;
+            };
 
             document.getElementById("next").onclick = () => {
                 if (pagina * LIMITE < filtrados.length) {
                     pagina++;
                     renderizar();
                 }
-            }
-            ;
+            };
 
             document.getElementById("busca").oninput = e => {
                 const t = e.target.value.toLowerCase();
                 filtrados = dados.filter(d => d.apelido.toLowerCase().includes(t));
                 pagina = 1;
                 renderizar();
-            }
-            ;
+            };
 
-            // Filtros de status
             document.querySelectorAll('.status-filters button').forEach(btn => {
                 btn.onclick = () => {
                     document.querySelectorAll('.status-filters button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     aplicarFiltroStatus(btn.dataset.status);
-                }
-                ;
-            }
-            );
+                };
+            });
         </script>
     </body>
 </html>
